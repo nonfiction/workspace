@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  workspace:
+    build: .
+    container_name: workspace
+    env_file: .env
+    volumes:
+      - type: volume
+        source: workspace
+        target: /workspace
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    restart: unless-stopped
+    expose: 
+      - 8443
+
+volumes:
+  workspace:
