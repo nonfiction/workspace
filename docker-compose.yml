@@ -2,7 +2,7 @@ version: "3.7"
 services:
   workspace:
     build: .
-    container_name: workspace
+    image: nonfiction/workspace:latest
     env_file: .env
     volumes:
       - type: volume
