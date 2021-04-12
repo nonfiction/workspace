@@ -1,4 +1,0 @@
-DOTFILES_DIRS="$HOME/.dotfiles"
-EXCLUDES="*.md"
-COPY_ALWAYS="ssh/authorized_keys"
-SYMLINK_DIRS="autoload colors plugin"

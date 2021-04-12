@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH=$WS_DATA/zsh/oh-my-zsh
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="muse"
@@ -42,9 +42,6 @@ export VISUAL=nvim
 alias vim=nvim
 alias vi=nvim
 
-# Refresh rcm symlinks
-alias rcm="rcdn && ln -sf ~/.dotfiles/rcrc ~/.rcrc && rcup"
-
 # python
 alias server="python -m SimpleHTTPServer"
 
@@ -81,14 +78,14 @@ source() {
   fi
 }
 
-update-everything() {
-  cd ~/.oh-my-zsh && git pull
-  cd ~/.fzf && git pull
-  nvim -E -c PackUpdate -c q
-  ~/.local/share/tmux/plugins/tpm/bin/install_plugins all
-  ~/.local/share/tmux/plugins/tpm/bin/update_plugins all
-  rcdn && ln -sf ~/.dotfiles/rcrc ~/.rcrc && rcup
-}
+# update-everything() {
+#   cd ~/.oh-my-zsh && git pull
+#   cd ~/.fzf && git pull
+#   nvim -E -c PackUpdate -c q
+#   ~/.local/share/tmux/plugins/tpm/bin/install_plugins all
+#   ~/.local/share/tmux/plugins/tpm/bin/update_plugins all
+#   rcdn && ln -sf ~/.dotfiles/rcrc ~/.rcrc && rcup
+# }
 
 n ()
 {
@@ -119,4 +116,4 @@ n ()
 }
 
 # Local env
-source ~/.env
+# source ~/.env
