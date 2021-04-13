@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.local/share/zsh/oh-my-zsh
+export ZSH=/home/nonfiction/.local/share/zsh/oh-my-zsh
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="muse"

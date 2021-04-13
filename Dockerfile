@@ -28,8 +28,9 @@ RUN ln -sf /home/nonfiction/.config/mysql/.my.cnf /home/nonfiction/.my.cnf
 RUN apk update && apk add openrc openssh openssh-client mosh
 RUN ln -sf /home/nonfiction/.config/ssh /home/nonfiction/.ssh
 RUN mkdir -p /run/openrc && touch /run/openrc/softlevel && rc-update add sshd
-RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+RUN echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 RUN echo "Port 2222" >> /etc/ssh/sshd_config
+RUN ssh-keygen -A
 
 # php & composer
 RUN apk update && apk add composer
@@ -45,8 +46,8 @@ RUN apk update && \
 
 RUN set -ex; \
   cd /etc/zsh; \
-  echo "export ZDOTDIR=$HOME/.config/zsh"           >> zshenv; \
-  echo "export HISTFILE=~/.local/share/zsh/history" >> zshenv;
+  echo "export ZDOTDIR=/home/nonfiction/.config/zsh" >> zshenv; \
+  echo "export HISTFILE=~/.local/share/zsh/history"  >> zshenv;
 
 # Copy the config and data directories
 COPY --chown=nonfiction:nonfiction ./config /home/nonfiction/.config

@@ -48,9 +48,11 @@ cd $CONFIG/code-server
 mkdir -p $DATA/code-server/User
 [ -e $DATA/code-server/User/settings.json ] || cp $CONFIG/code-server/settings.json $DATA/code-server/User/settings.json
 
-# # sshd on port 2222
-# service sshd start
+# sshd on port 2222
+rc-status
+/etc/init.d/sshd start
 
+# Permissions on home directory and docker.sock
 chown -R nonfiction: /home/nonfiction
 chown -R nonfiction: /var/run/docker.sock
 
