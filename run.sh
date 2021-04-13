@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 CONFIG=/home/nf/.config
-DATA=/home/nf/.share/local
+DATA=/home/nf/.local/share
 
 # oh-my-zsh
 mkdir -p $DATA/zsh
