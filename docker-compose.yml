@@ -6,8 +6,11 @@ services:
     env_file: .env
     volumes:
       - type: volume
+        source: data
+        target: /home/nf/.local/share
+      - type: volume
         source: workspace
-        target: /workspace
+        target: /home/nf/workspace
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
@@ -17,4 +20,5 @@ services:
       - 2222
 
 volumes:
+  data:
   workspace:

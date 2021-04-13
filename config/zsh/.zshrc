@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Path to your oh-my-zsh installation.
-export ZSH=$WS_DATA/zsh/oh-my-zsh
+export ZSH=$HOME/.local/share/zsh/oh-my-zsh
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="muse"
@@ -29,7 +29,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Path
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-export PATH="./bin:$HOME/bin:$HOME/.dotfiles/bin:$PATH"
+export PATH="./bin:$HOME/bin:$PATH"
 
 # Path on separate lines
 path() {
