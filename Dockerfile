@@ -47,7 +47,8 @@ RUN apk update && \
 RUN set -ex; \
   cd /etc/zsh; \
   echo "export ZDOTDIR=/home/nonfiction/.config/zsh" >> zshenv; \
-  echo "export HISTFILE=~/.local/share/zsh/history"  >> zshenv;
+  echo "export HISTFILE=/home/nonfiction/.local/share/zsh/history" >> zshenv; \
+  echo "export NPM_CONFIG_USERCONFIG=/home/nonfiction/.config/npm/npmrc" >> zshenv;
 
 # Copy the config and data directories
 COPY --chown=nonfiction:nonfiction ./config /home/nonfiction/.config

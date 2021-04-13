@@ -2,6 +2,7 @@
 
 CONFIG=/home/nonfiction/.config
 DATA=/home/nonfiction/.local/share
+CACHE=/home/nonfiction/.cache
 
 # oh-my-zsh
 mkdir -p $DATA/zsh
@@ -20,6 +21,9 @@ mkdir -p $DATA/nvim/site/{autoload,plugged}
 curl -fL https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > $DATA/nvim/site/autoload/plug.vim
 [ -e $DATA/nvim/site/autoload/custom.vim ] || cp $CONFIG/nvim/custom.vim $DATA/nvim/site/autoload/custom.vim
 nvim +PlugInstall +qall >> /dev/null
+
+# npm
+mkdir -p $DATA/npm $CACHE/npm
 
 # Update password for user
 if [ ! -z "$SUDO_PASSWORD" ]; then
