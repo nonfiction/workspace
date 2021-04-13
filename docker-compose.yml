@@ -7,10 +7,10 @@ services:
     volumes:
       - type: volume
         source: data
-        target: /home/nf/.local/share
+        target: /home/nonfiction/.local/share
       - type: volume
-        source: workspace
-        target: /home/nf/workspace
+        source: work
+        target: /home/nonfiction/work
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
@@ -21,4 +21,4 @@ services:
 
 volumes:
   data:
-  workspace:
+  work:

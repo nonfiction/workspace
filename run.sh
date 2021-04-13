@@ -1,7 +1,7 @@
 #!/bin/zsh
 
-CONFIG=/home/nf/.config
-DATA=/home/nf/.local/share
+CONFIG=/home/nonfiction/.config
+DATA=/home/nonfiction/.local/share
 
 # oh-my-zsh
 mkdir -p $DATA/zsh
@@ -51,8 +51,8 @@ mkdir -p $DATA/code-server/User
 # # sshd on port 2222
 # service sshd start
 
-chown -R nf: /home/nf
-chown -R nf: /var/run/docker.sock
+chown -R nonfiction: /home/nonfiction
+chown -R nonfiction: /var/run/docker.sock
 
 # Run code-server
-su -c "cd /home/nf/workspace && code-server" - nf
+su -c "cd /home/nonfiction/work && code-server" - nonfiction
