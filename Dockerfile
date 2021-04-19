@@ -33,7 +33,10 @@ RUN echo "Port 2222" >> /etc/ssh/sshd_config
 RUN ssh-keygen -A
 
 # php & composer
-RUN apk update && apk add composer
+RUN apk update && apk add \
+    composer php7-common php7-ctype php7-tokenizer php7-gd \
+    php7-mysqli php7-exif php7-opcache php7-zip php7-xml \
+    php7-curl php7-mbstring php7-xmlwriter php7-simplexml
 
 # docker & docker-compose
 RUN apk update && apk add docker docker-compose
