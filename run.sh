@@ -13,9 +13,9 @@ mkdir -p /data/zsh
 [ -e /data/fzf ] || git clone --depth 1 https://github.com/junegunn/fzf.git /data/fzf
 
 # tmux plugin manager
-mkdir -p /data/tmux
-[ -e /data/tmux/tpm ] || git clone https://github.com/tmux-plugins/tpm /data/tmux/tpm
-[ -e /data/tmux/tpm/bin/install_plugins ] && /data/tmux/tpm/bin/install_plugins
+mkdir -p /data/tmux/plugins
+[ -e /data/tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm /data/tmux/plugins/tpm
+[ -e /data/tmux/plugins/tpm/bin/install_plugins ] && /data/tmux/plugins/tpm/bin/install_plugins
 
 # vim-plug
 mkdir -p /data/nvim/site/{autoload,plugged}
