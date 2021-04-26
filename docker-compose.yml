@@ -5,10 +5,6 @@ services:
     image: nonfiction/workspace:latest
     env_file: .env
     volumes:
-      # - cache:/cache
-      # - data:/data
-      # - /work:/work
-      # - /var/run/docker.sock:/var/run/docker.sock
       - type: volume
         source: cache
         target: /cache

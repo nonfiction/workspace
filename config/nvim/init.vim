@@ -275,7 +275,7 @@ set gdefault
 noremap <leader><space> :noh<CR>:match none<CR>:2match none<CR>:3match none<CR>
 
 " fzf fuzzy finder
-set rtp+=~/.fzf
+set rtp+=/data/fzf
 nnoremap <C-t> <ESC>:Files<CR>
 " nnoremap <M-k> <ESC>:Buffers<CR>
 nnoremap <M-t> <ESC>:Lines<CR>

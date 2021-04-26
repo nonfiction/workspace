@@ -44,7 +44,7 @@ RUN addgroup work docker
 # tools
 RUN apk update && \
     apk add zsh tmux fzf nnn neovim neovim-doc neovim-lang fzf-neovim \
-    highlight ack ripgrep the_silver_searcher
+    highlight fd ack ripgrep the_silver_searcher
 
 RUN set -ex; \
   cd /etc/zsh; \

@@ -44,8 +44,6 @@ cd /config/mysql
 [ ! -z "$DB_HOST" ] && sed -i "s/__HOST__/${DB_HOST}/" .my.cnf
 [ ! -z "$DB_PORT" ] && sed -i "s/__PORT__/${DB_PORT}/" .my.cnf
 ln -sf /config/mysql/.my.cnf /work/.my.cnf
-mkdir -p /data/mysql
-ln -sf /data/mysql/.mysql_history /work/.mysql_history
 
 # Password for code-server
 cd /config/code-server
