@@ -1,2 +1,2 @@
-prefix=/home/nonfiction/.local/share/npm
-cache=/home/nonfiction/.cache/npm
+prefix=/data/npm
+cache=/cache/npm

@@ -7,10 +7,10 @@ RUN npm install -g --unsafe-perm code-server
 
 # workspace user
 RUN apk update && apk add sudo git
-RUN adduser -h /home/nonfiction -s /bin/zsh nonfiction | echo password
-ENV HOME /home/nonfiction
+RUN adduser -h /work -s /bin/zsh work | echo password
+ENV HOME /work
 RUN echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
-RUN addgroup nonfiction wheel
+RUN addgroup work wheel
 
 # npm & webpack
 RUN apk update && apk add npm
@@ -22,11 +22,10 @@ RUN gem install -f thor dotenv
 
 # mysql client
 RUN apk update && apk add mariadb-client mariadb-connector-c
-RUN ln -sf /home/nonfiction/.config/mysql/.my.cnf /home/nonfiction/.my.cnf
 
 # sshd
 RUN apk update && apk add openrc openssh openssh-client mosh
-RUN ln -sf /home/nonfiction/.config/ssh /home/nonfiction/.ssh
+RUN mkdir -p /etc/ssh
 RUN mkdir -p /run/openrc && touch /run/openrc/softlevel && rc-update add sshd
 RUN echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 RUN echo "Port 2222" >> /etc/ssh/sshd_config
@@ -37,11 +36,10 @@ RUN apk update && apk add \
     composer php7-common php7-ctype php7-tokenizer php7-gd \
     php7-mysqli php7-exif php7-opcache php7-zip php7-xml \
     php7-curl php7-mbstring php7-xmlwriter php7-simplexml
-RUN mkdir -p /home/nonfiction/.local/share/composer ln -s /home/nonfiction/.local/share/composer /home/nonfiction/.composer
 
 # docker & docker-compose
 RUN apk update && apk add docker docker-compose
-RUN addgroup nonfiction docker
+RUN addgroup work docker
 
 # tools
 RUN apk update && \
@@ -50,17 +48,19 @@ RUN apk update && \
 
 RUN set -ex; \
   cd /etc/zsh; \
-  echo "export ZDOTDIR=/home/nonfiction/.config/zsh" >> zshenv; \
-  echo "export HISTFILE=/home/nonfiction/.local/share/zsh/history" >> zshenv; \
-  echo "export NPM_CONFIG_USERCONFIG=/home/nonfiction/.config/npm/npmrc" >> zshenv;
+  echo "export XDG_CONFIG_HOME=/config" >> zshenv; \
+  echo "export XDG_CACHE_HOME=/cache" >> zshenv; \
+  echo "export XDG_DATA_HOME=/data" >> zshenv; \
+  echo "export ZDOTDIR=/config/zsh" >> zshenv; \
+  echo "export HISTFILE=/data/zsh/history" >> zshenv; \
+  echo "export NPM_CONFIG_USERCONFIG=/config/npm/npmrc" >> zshenv;
 
-# Copy the config and data directories
-COPY --chown=nonfiction:nonfiction ./config /home/nonfiction/.config
-VOLUME /home/nonfiction/.local/share
-
-# Work goes here
-VOLUME /home/nonfiction/work
-WORKDIR /home/nonfiction/work
+# Copy the config and set data volume
+COPY --chown=work:work ./config /config
+VOLUME /cache
+VOLUME /data
+VOLUME /work
+WORKDIR /work
 
 COPY ./run.sh /bin/run
 RUN chmod +x /bin/run

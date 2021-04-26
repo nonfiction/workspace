@@ -1,6 +1,6 @@
 " let mapleader = ","
 
-call plug#begin(' ~/.local/share/nvim/site/plugged')
+call plug#begin('/data/nvim/site/plugged')
 
  " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
@@ -349,6 +349,6 @@ let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
 
 " Local config
-if filereadable($HOME . "/.config/nvim/local.vim")
-  source ~/.config/nvim/local.vim
+if filereadable("/config/nvim/local.vim")
+  source /config/nvim/local.vim
 endif

@@ -1,64 +1,68 @@
 #!/bin/zsh
 
-CONFIG=/home/nonfiction/.config
-DATA=/home/nonfiction/.local/share
-CACHE=/home/nonfiction/.cache
-
-# oh-my-zsh
-mkdir -p $DATA/zsh
-[ -e $DATA/zsh/oh-my-zsh ] || git clone https://github.com/robbyrussell/oh-my-zsh.git $DATA/zsh/oh-my-zsh
-
-# fzf
-[ -e $DATA/fzf ] || git clone --depth 1 https://github.com/junegunn/fzf.git $DATA/fzf
-
-# tmux plugin manager
-mkdir -p $DATA/tmux/plugins
-[ -e $DATA/tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm $DATA/tmux/plugins/tpm
-[ -e $DATA/tmux/plugins/tpm/bin/install_plugins ] && $DATA/tmux/plugins/tpm/bin/install_plugins
-
-# vim-plug
-mkdir -p $DATA/nvim/site/{autoload,plugged}
-curl -fL https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > $DATA/nvim/site/autoload/plug.vim
-[ -e $DATA/nvim/site/autoload/custom.vim ] || cp $CONFIG/nvim/custom.vim $DATA/nvim/site/autoload/custom.vim
-nvim +PlugInstall +qall >> /dev/null
-
-# npm
-mkdir -p $DATA/npm $CACHE/npm
-
 # Update password for user
 if [ ! -z "$SUDO_PASSWORD" ]; then
-  echo "nonfiction:${SUDO_PASSWORD}" | chpasswd
+  echo "work:${SUDO_PASSWORD}" | chpasswd
 fi
 
-# Git config
-if [ ! -z "$GIT_USER_NAME" ] && [ ! -z "$GIT_USER_EMAIL" ]; then
-  git config --global user.name "$GIT_USER_NAME"
-  git config --global user.email "$GIT_USER_EMAIL"
-  git config credential.helper store
-fi
+# oh-my-zsh
+mkdir -p /data/zsh
+[ -e /data/zsh/oh-my-zsh ] || git clone https://github.com/robbyrussell/oh-my-zsh.git /data/zsh/oh-my-zsh
+
+# fzf
+[ -e /data/fzf ] || git clone --depth 1 https://github.com/junegunn/fzf.git /data/fzf
+
+# tmux plugin manager
+mkdir -p /data/tmux
+[ -e /data/tmux/tpm ] || git clone https://github.com/tmux-plugins/tpm /data/tmux/tpm
+[ -e /data/tmux/tpm/bin/install_plugins ] && /data/tmux/tpm/bin/install_plugins
+
+# vim-plug
+mkdir -p /data/nvim/site/{autoload,plugged}
+curl -fL https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > /data/nvim/site/autoload/plug.vim
+[ -e /data/nvim/site/autoload/custom.vim ] || cp /data/nvim/custom.vim /data/nvim/site/autoload/custom.vim
+nvim +PlugInstall +qall >> /dev/null
+
+# PHP Composer
+mkdir -p /data/composer 
+[ -e /work/.composer ] || ln -s /data/composer /work/.composer
+
+# npm
+mkdir -p /data/npm /cache/npm
+
+# Git & Github
+cd /config/git
+[ ! -z "$GIT_NAME" ] && sed -i "s/__NAME__/${GIT_NAME}/" config
+[ ! -z "$GIT_EMAIL" ] && sed -i "s/__EMAIL__/${GIT_EMAIL}/" config
+[ ! -z "$GITHUB_USER" ] && sed -i "s/__USER__/${GITHUB_USER}/" credentials
+[ ! -z "$GITHUB_TOKEN" ] && sed -i "s/__TOKEN__/${GITHUB_TOKEN}/" credentials
 
 # Settings for mysql client
-cd $CONFIG/mysql
+cd /config/mysql
 [ ! -z "$DB_USER" ] && sed -i "s/__USER__/${DB_USER}/" .my.cnf
 [ ! -z "$DB_PASSWORD" ] && sed -i "s/__PASSWORD__/${DB_PASSWORD}/" .my.cnf
 [ ! -z "$DB_HOST" ] && sed -i "s/__HOST__/${DB_HOST}/" .my.cnf
 [ ! -z "$DB_PORT" ] && sed -i "s/__PORT__/${DB_PORT}/" .my.cnf
+ln -sf /config/mysql/.my.cnf /work/.my.cnf
+mkdir -p /data/mysql
+ln -sf /data/mysql/.mysql_history /work/.mysql_history
 
 # Password for code-server
-cd $CONFIG/code-server
+cd /config/code-server
 [ ! -z "$CODE_PASSWORD" ] && sed -i "s/__PASSWORD__/${CODE_PASSWORD}/" config.yaml
 
 # Default settings for code-server
-mkdir -p $DATA/code-server/User
-[ -e $DATA/code-server/User/settings.json ] || cp $CONFIG/code-server/settings.json $DATA/code-server/User/settings.json
+mkdir -p /data/code-server/User
+[ -e /data/code-server/User/settings.json ] || cp /config/code-server/settings.json /data/code-server/User/settings.json
 
-# sshd on port 2222
+# ssh on port 2222
+[ -e /work/.ssh ] || ln -s /config/ssh /work/.ssh
 rc-status
 /etc/init.d/sshd start
 
-# Permissions on home directory and docker.sock
-chown -R nonfiction: /home/nonfiction
-chown -R nonfiction: /var/run/docker.sock
+# Permissions on home directories and docker.sock
+chown -R work:work /config /work /data /cache
+chown -R work: /var/run/docker.sock
 
 # Run code-server
-su -c "cd /home/nonfiction/work && code-server" - nonfiction
+su -c "cd /work && code-server" - work

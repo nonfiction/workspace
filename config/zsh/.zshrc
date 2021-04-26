@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/nonfiction/.local/share/zsh/oh-my-zsh
+export ZSH=/data/zsh/oh-my-zsh
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="muse"
@@ -115,5 +115,4 @@ n ()
     fi
 }
 
-# Local env
-# source ~/.env
+source $ZDOTDIR/.shellfishrc
