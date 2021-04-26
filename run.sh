@@ -5,6 +5,9 @@ if [ ! -z "$SUDO_PASSWORD" ]; then
   echo "work:${SUDO_PASSWORD}" | chpasswd
 fi
 
+# Just in case
+mkdir -p /work/.config /config
+
 # oh-my-zsh
 mkdir -p /data/zsh
 [ -e /data/zsh/oh-my-zsh ] || git clone https://github.com/robbyrussell/oh-my-zsh.git /data/zsh/oh-my-zsh

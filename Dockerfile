@@ -17,6 +17,7 @@ RUN apk update && apk add npm
 RUN npm install -g webpack webpack-cli webpack-dev-server eslint stylelint
 
 # ruby & thor
+USER root
 RUN apk update && apk add make less curl unzip rsync dialog ruby
 RUN gem install -f thor dotenv
 
