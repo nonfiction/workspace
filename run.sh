@@ -6,7 +6,7 @@ if [ ! -z "$SUDO_PASSWORD" ]; then
 fi
 
 # Just in case
-mkdir -p /work/.config /config
+[ -e /work/.config ] || ln -s /config /work/.config
 
 # oh-my-zsh
 mkdir -p /data/zsh
