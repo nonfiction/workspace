@@ -15,6 +15,10 @@ Workspace environment for web development, including:
 - [Docker](https://docs.docker.com/engine/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
+## Create work directory on host:  
+
+`sudo mkdir -p /work`  
+
 ## Create .env and populate values:  
 
 `cp example.env .env`  
