@@ -49,6 +49,9 @@ RUN apk update && \
 
 RUN set -ex; \
   cd /etc/zsh; \
+  echo "export LANG=en_US.UTF-8" >> zshenv; \
+  echo "export LANGUAGE=en_US:en" >> zshenv; \
+  echo "export LC_ALL=en_US.UTF-8" >> zshenv; \
   echo "export XDG_CONFIG_HOME=/config" >> zshenv; \
   echo "export XDG_CACHE_HOME=/cache" >> zshenv; \
   echo "export XDG_DATA_HOME=/data" >> zshenv; \
