@@ -43,8 +43,9 @@ RUN apk update && apk add docker docker-compose
 RUN addgroup work docker
 
 # tools
-RUN apk update && \
-    apk add zsh tmux fzf nnn neovim neovim-doc neovim-lang fzf-neovim \
+RUN apk update && apk add \
+    iputils \
+    zsh tmux fzf nnn neovim neovim-doc neovim-lang fzf-neovim \
     highlight fd ack ripgrep the_silver_searcher
 
 RUN set -ex; \
