@@ -58,7 +58,9 @@ RUN set -ex; \
   echo "export XDG_DATA_HOME=/data" >> zshenv; \
   echo "export ZDOTDIR=/config/zsh" >> zshenv; \
   echo "export HISTFILE=/data/zsh/history" >> zshenv; \
-  echo "export NPM_CONFIG_USERCONFIG=/config/npm/npmrc" >> zshenv;
+  echo "export NPM_CONFIG_USERCONFIG=/config/npm/npmrc" >> zshenv; \
+  echo "export DOCKER_CONFIG=/data/docker" >> zshenv; \
+  echo "export MACHINE_STORAGE_PATH=/data/docker-machine" >> zshenv;
 
 # Copy the config and set data volume
 COPY --chown=work:work ./config /config
