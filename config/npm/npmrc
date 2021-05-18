@@ -1,2 +1,2 @@
-prefix=/data/npm
-cache=/cache/npm
+prefix=/config/data/npm
+cache=/config/cache/npm

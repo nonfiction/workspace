@@ -7,10 +7,10 @@ services:
     volumes:
       - type: volume
         source: cache
-        target: /cache
+        target: /config/cache
       - type: volume
         source: data
-        target: /data
+        target: /config/data
       - type: bind
         source: /work
         target: /work

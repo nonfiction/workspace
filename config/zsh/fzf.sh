@@ -1,10 +1,10 @@
-export FZF_BASE=/data/fzf
+export FZF_BASE=/config/data/fzf
 export FZF_DEFAULT_COMMAND="fd --no-ignore-vcs --exclude node_modules --exclude .git . ."
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d --no-ignore-vcs --exclude node_modules --exclude .git . ."
 
-source /data/fzf/shell/key-bindings.zsh
-source /data/fzf/shell/completion.zsh
+source /config/data/fzf/shell/key-bindings.zsh
+source /config/data/fzf/shell/completion.zsh
 
 fzf-global-file-widget() {
     tmp_ctrl_t=$FZF_CTRL_T_COMMAND
