@@ -5,15 +5,15 @@ services:
     image: nonfiction/workspace:latest
     env_file: .env
     volumes:
-      - type: volume
-        source: cache
-        target: /config/cache
-      - type: volume
-        source: data
-        target: /config/data
       - type: bind
         source: /work
         target: /work
+      - type: volume
+        source: data
+        target: /work/.local/share
+      - type: volume
+        source: cache
+        target: /work/.cache
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock

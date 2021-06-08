@@ -1,6 +1,6 @@
 " let mapleader = ","
 
-call plug#begin('/config/data/nvim/site/plugged')
+call plug#begin('/work/.local/share/nvim/site/plugged')
 
  " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
@@ -275,7 +275,7 @@ set gdefault
 noremap <leader><space> :noh<CR>:match none<CR>:2match none<CR>:3match none<CR>
 
 " fzf fuzzy finder
-set rtp+=/config/data/fzf
+set rtp+=/work/.local/share/fzf
 nnoremap <C-t> <ESC>:Files<CR>
 " nnoremap <M-k> <ESC>:Buffers<CR>
 nnoremap <M-t> <ESC>:Lines<CR>
@@ -349,6 +349,6 @@ let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
 
 " Local config
-if filereadable("/config/nvim/local.vim")
-  source /config/nvim/local.vim
+if filereadable("/work/.config/nvim/local.vim")
+  source /work/.config/nvim/local.vim
 endif
