@@ -47,7 +47,7 @@ echo_color() {
   
   local format=""
   for color in $(echo "$1" | tr "/" "\n"); do  
-    format="${format}${!color}"
+    format="${format}${(P)color}"
   done
   local message="${@:2}"  
   
@@ -67,7 +67,7 @@ echo_line() {
 
 echo_env() {
   defined $1 || return
-  local key="$1" val="${!1}" trim=$2
+  local key="$1" val="${(P)1}" trim=$2
   if defined $trim; then
     val="$(echo $val | head -c $trim)[...]$(echo $val | tail -c $trim)"
   fi
@@ -89,7 +89,7 @@ path() {
 
 # Check for environment variable, fall back on file, or use default
 env_file_default() {
-  local variable="${!1}"
+  local variable="${(P)1}"
   if undefined "$variable"; then
     defined "$2" && has "$2" && variable="$(cat $2)"
     if undefined "$variable"; then
