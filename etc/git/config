@@ -5,8 +5,8 @@
 [credential]
   helper = store
 [user]
-  name = __NAME__
-  email = __EMAIL__
+  name = __GIT_NAME__
+  email = __GIT_EMAIL__
 [color]
   ui = auto
 [core]
@@ -41,4 +41,4 @@
   up = !git fetch origin && git rebase origin/master
   l = log --graph --abbrev-commit --decorate --all --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
 [include]
-  path = /work/.local/share/.gitconfig
+  path = /usr/local/share/gitconfig

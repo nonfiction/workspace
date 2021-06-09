@@ -53,25 +53,24 @@ RUN set -ex; \
   echo "export LANG=en_US.UTF-8" >> zshenv; \
   echo "export LANGUAGE=en_US:en" >> zshenv; \
   echo "export LC_ALL=en_US.UTF-8" >> zshenv; \
-  echo "export XDG_CONFIG_HOME=/work/.config" >> zshenv; \
-  echo "export XDG_CACHE_HOME=/work/.cache" >> zshenv; \
-  echo "export XDG_DATA_HOME=/work/.local/share" >> zshenv; \
-  echo "export ZDOTDIR=/work/.config/zsh" >> zshenv; \
-  echo "export HISTFILE=/work/.local/share/zsh/history" >> zshenv; \
-  echo "export NPM_CONFIG_USERCONFIG=/work/.config/npm/npmrc" >> zshenv; \
-  echo "export DOCKER_CONFIG=/work/.local/share/docker" >> zshenv; \
-  echo "export MACHINE_STORAGE_PATH=/work/.local/share/docker-machine" >> zshenv;
+  echo "export XDG_CONFIG_HOME=/usr/local/etc" >> zshenv; \
+  echo "export XDG_CACHE_HOME=/usr/local/cache" >> zshenv; \
+  echo "export XDG_DATA_HOME=/usr/local/share" >> zshenv; \
+  echo "export ZDOTDIR=/usr/local/etc/zsh" >> zshenv; \
+  echo "export HISTFILE=/usr/local/share/zsh/history" >> zshenv; \
+  echo "export NPM_CONFIG_USERCONFIG=/usr/local/etc/npm/npmrc" >> zshenv; \
+  echo "export DOCKER_CONFIG=/usr/local/share/docker" >> zshenv; \
+  echo "export MACHINE_STORAGE_PATH=/usr/local/share/docker-machine" >> zshenv;
 
 # Copy the config and set data volume
-COPY --chown=work:work ./config /config
+COPY --chown=work:work ./etc /usr/local/etc
+VOLUME /usr/local/share
+VOLUME /usr/local/cache
 VOLUME /work
-VOLUME /work/.local/share
-VOLUME /work/.cache
 WORKDIR /work
 
-COPY ./run.sh /bin/run
-RUN chmod +x /bin/run
-CMD ["/bin/run"]
+COPY --chown=work:work ./bin /usr/local/bin
+CMD ["/usr/local/bin/run"]
 
 EXPOSE 8443
 EXPOSE 2222

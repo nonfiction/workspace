@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Path to your oh-my-zsh installation.
-export ZSH=/work/.local/share/zsh/oh-my-zsh
+export ZSH=/usr/local/share/zsh/oh-my-zsh
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="muse"
@@ -32,7 +32,7 @@ plugins=(git gitignore sudo rsync)
 source $ZSH/oh-my-zsh.sh
 
 # Shell Helpers 
-source /work/.config/zsh/helpers.sh
+source /usr/local/etc/zsh/helpers.sh
 
 # Path
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
@@ -45,13 +45,13 @@ alias vim=nvim
 alias vi=nvim
 
 # Customize FZF
-source /work/.config/zsh/fzf.sh
+source /usr/local/etc/zsh/fzf.sh
 
 # Ctrl-n nnn
-source /work/.config/zsh/nnn.sh
+source /usr/local/etc/zsh/nnn.sh
 
 # Secure Shellfish integration
-source /work/.config/zsh/shellfish.sh
+source /usr/local/etc/zsh/shellfish.sh
 
 # Misc
 alias server="python -m SimpleHTTPServer"

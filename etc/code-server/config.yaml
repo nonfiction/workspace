@@ -1,4 +1,4 @@
 bind-addr: 0.0.0.0:8443
 auth: password
-password: __PASSWORD__
+password: __CODE_PASSWORD__
 cert: true
