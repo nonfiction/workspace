@@ -150,3 +150,42 @@ first() {
 after_first() {
   echo "$(input $1)" | awk '{$1=""}1' | xargs
 }
+
+# one command to clone or pull a git repo
+git_clone_pull() {
+
+  if [ $# -lt 2 ]; then
+    echo "Usage: git_clone_pull repository directory"
+    exit 1
+  fi
+
+  local repository=$1
+  local directory=$2
+
+  # Check if the directory exists
+  if [ -d $directory ]; then
+
+    # Now check if it's a git repo
+    if [ -d $directory/.git ]; then
+
+      # It is? Great, let update it!
+      echo "Updating $repository"
+      pushd $directory > /dev/null && git pull && popd > /dev/null
+
+    # It's not? Rename it so we can install this one
+    else
+      echo "Backing up existing $directory to make room for the new one!"
+      mv $directory $directory.backup
+    fi
+  fi
+
+  # Make sure the directory doesn't exist
+  if [ ! -d $directory ]; then
+
+    # Install repo
+    echo "Installing $repository"
+    git clone $repository $directory
+
+  fi
+
+}

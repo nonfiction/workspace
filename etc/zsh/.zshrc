@@ -53,5 +53,8 @@ source /usr/local/etc/zsh/nnn.sh
 # Secure Shellfish integration
 source /usr/local/etc/zsh/shellfish.sh
 
+autoload -Uz bashcompinit && bashcompinit
+source /root/platform/swarm/lib/completion.sh
+
 # Misc
 alias server="python -m SimpleHTTPServer"

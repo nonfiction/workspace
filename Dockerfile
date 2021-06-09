@@ -70,7 +70,7 @@ VOLUME /work
 WORKDIR /work
 
 COPY --chown=work:work ./bin /usr/local/bin
-CMD ["/usr/local/bin/run"]
+CMD ["/usr/local/bin/init"]
 
 EXPOSE 8443
 EXPOSE 2222
