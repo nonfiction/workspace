@@ -156,7 +156,7 @@ git_clone_pull() {
 
   if [ $# -lt 2 ]; then
     echo "Usage: git_clone_pull repository directory"
-    exit 1
+    return 1
   fi
 
   local repository=$1
