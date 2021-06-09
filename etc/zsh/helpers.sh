@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # True if command or file does exist
 has() {
   if [ -e "$1" ]; then return 0; fi

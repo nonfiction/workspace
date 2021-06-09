@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+# Permissions on user directories and docker.sock
+chown -R work:work /usr/local /work /root/platform/swarm
+chown -R work: /var/run/docker.sock
+
+# Run updates
+/usr/local/bin/update
+
+# ssh on port 2222
+rc-status
+/etc/init.d/sshd start
+
+# Run code-server
+su -c "cd /work && code-server" - work
