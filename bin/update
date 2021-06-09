@@ -50,8 +50,9 @@ defined "$DB_PORT" && sed -i "s/__DB_PORT__/${DB_PORT}/" $etc/mysql/.my.cnf
 CODE_PASSWORD=$(env_file_default CODE_PASSWORD /run/secrets/code_server "secret")
 defined "$CODE_PASSWORD" && sed -i "s/__CODE_PASSWORD__/${CODE_PASSWORD}/" $etc/code-server/config.yaml
 
-# Swarm command
-ln -sf /root/platform/swarm/swarm /usr/local/bin/swarm
+# platform / swarm command
+git_clone_pull https://github.com/nonfiction/platform.git $share/platform
+ln -sf $share/platform/swarm/swarm /usr/local/bin/swarm
 
 # workspace (this repo)
 git_clone_pull https://github.com/nonfiction/workspace.git $share/workspace

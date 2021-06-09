@@ -8,7 +8,7 @@ rc-status
 /etc/init.d/sshd start
 
 # Permissions on user directories and docker.sock
-chown -R work:work /usr/local /work /root/platform/swarm
+chown -R work:work /usr/local /work
 chown -R work: /var/run/docker.sock
 
 # Run code-server
