@@ -8,106 +8,108 @@ Plug 'junegunn/vim-easy-align'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
+
+" Colorscheme
+Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
+Plug 'flazz/vim-colorschemes'
+
+" Status line
+Plug 'itchyny/lightline.vim'
+
+" Quickly switch between buffers
+Plug 'jlanzarotta/bufexplorer'
+
+" Vim/Tmux integration
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'roxma/vim-tmux-clipboard'
+
+" Git
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'gregsexton/gitv'
+Plug 'airblade/vim-gitgutter'
+
+" Nerd Tree file management
+Plug 'scrooloose/nerdtree'
+Plug 'taiansu/nerdtree-ag'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Fuzzy Finder
+Plug 'junegunn/fzf.vim'
+
+" Tim Pope's good stuff
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat'
+
+" Ruby/Rails 
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-bundler'
+
+" Auto-close brackets, quotes, etc
+Plug 'Raimondi/delimitMate'
+
+" Command line mode mappings
+Plug 'vim-utils/vim-husk'
+
+" Find and Replace
+Plug 'brooth/far.vim'
+
+" Silver Searcher
+Plug 'rking/ag.vim'
+
+" Grep
+Plug 'mhinz/vim-grepper'
+
+" Undo tool
+Plug 'sjl/gundo.vim'
+
+" Easier cursor movement
+Plug 'justinmk/vim-sneak'
+Plug 'bkad/CamelCaseMotion'
+Plug 'henrik/vim-indexed-search'
+
+" Code commenter
+Plug 'tomtom/tcomment_vim'
+
+" Auto cd to project root
+Plug 'airblade/vim-rooter'
+
+" :Align
+Plug 'tsaleh/vim-align'
+
+" Syntax errors
+Plug 'vim-syntastic/syntastic'
+
+" Syntax colors
+Plug 'othree/html5.vim'
+Plug 'blueyed/smarty.vim'
+Plug 'lumiliet/vim-twig'
+Plug 'vim-scripts/jade.vim'
+Plug 'kchmck/vim-coffee-script'
+Plug 'lchi/vim-toffee'
+Plug 'vim-scripts/jQuery'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'groenewege/vim-less'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'bwangel23/nginx-vim-syntax'
+Plug 'vim-scripts/openvpn'
+Plug 'othree/yajs.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'mxw/vim-jsx'
+if has('Python')
+  call minpac#add('valloric/MatchTagAlways'
+endif
+
 " Initialize plugin system
 call plug#end()
 
-" " Colorscheme
-" call minpac#add('morhetz/gruvbox')
-" call minpac#add('arcticicestudio/nord-vim')
-" call minpac#add('flazz/vim-colorschemes')
-"
-" " Status line
-" call minpac#add('itchyny/lightline.vim')
-"
-" " Quickly switch between buffers
-" call minpac#add('jlanzarotta/bufexplorer')
-"
-" " Vim/Tmux integration
-" call minpac#add('christoomey/vim-tmux-navigator')
-" call minpac#add('roxma/vim-tmux-clipboard')
-"
-" " Git
-" call minpac#add('tpope/vim-git')
-" call minpac#add('tpope/vim-fugitive')
-" call minpac#add('tpope/vim-rhubarb')
-" call minpac#add('gregsexton/gitv')
-" call minpac#add('airblade/vim-gitgutter')
-"
-" " Nerd Tree file management
-" call minpac#add('scrooloose/nerdtree')
-" call minpac#add('taiansu/nerdtree-ag')
-" call minpac#add('Xuyuanp/nerdtree-git-plugin')
-"
-" " Fuzzy Finder
-" call minpac#add('junegunn/fzf.vim')
-"
-" " Tim Pope's good stuff
-" call minpac#add('tpope/vim-sensible')
-" call minpac#add('tpope/vim-obsession')
-" call minpac#add('tpope/vim-surround')
-" call minpac#add('tpope/vim-unimpaired')
-" call minpac#add('tpope/vim-endwise')
-" call minpac#add('tpope/vim-repeat')
-"
-" " Ruby/Rails 
-" call minpac#add('tpope/vim-rails')
-" call minpac#add('tpope/vim-rake')
-" call minpac#add('tpope/vim-bundler')
-"
-" " Auto-close brackets, quotes, etc
-" call minpac#add('Raimondi/delimitMate')
-"
-" " Command line mode mappings
-" call minpac#add('vim-utils/vim-husk')
-"
-" " Find and Replace
-" call minpac#add('brooth/far.vim')
-"
-" " Silver Searcher
-" call minpac#add('rking/ag.vim')
-"
-" " Grep
-" call minpac#add('mhinz/vim-grepper')
-"
-" " Undo tool
-" call minpac#add('sjl/gundo.vim')
-"
-" " Easier cursor movement
-" call minpac#add('justinmk/vim-sneak')
-" call minpac#add('bkad/CamelCaseMotion')
-" call minpac#add('henrik/vim-indexed-search')
-"
-" " Code commenter
-" call minpac#add('tomtom/tcomment_vim')
-"
-" " Auto cd to project root
-" call minpac#add('airblade/vim-rooter')
-"
-" " :Align
-" call minpac#add('tsaleh/vim-align')
-"
-" " Syntax errors
-" call minpac#add('vim-syntastic/syntastic')
-"
-" " Syntax colors
-" call minpac#add('othree/html5.vim')
-" call minpac#add('blueyed/smarty.vim')
-" call minpac#add('lumiliet/vim-twig')
-" call minpac#add('vim-scripts/jade.vim')
-" call minpac#add('kchmck/vim-coffee-script')
-" call minpac#add('lchi/vim-toffee')
-" call minpac#add('vim-scripts/jQuery')
-" call minpac#add('hail2u/vim-css3-syntax')
-" call minpac#add('groenewege/vim-less')
-" call minpac#add('ekalinin/Dockerfile.vim')
-" call minpac#add('bwangel23/nginx-vim-syntax')
-" call minpac#add('vim-scripts/openvpn')
-" call minpac#add('othree/yajs.vim')
-" call minpac#add('othree/javascript-libraries-syntax.vim')
-" call minpac#add('mxw/vim-jsx')
-" if has('Python')
-"   call minpac#add('valloric/MatchTagAlways')
-" endif
 
 " Basic stuff
 set encoding=utf-8                     " always use the good encoding
