@@ -31,6 +31,9 @@ done
 rc-status
 /etc/init.d/sshd start
 
+# Make sure authorized_keys exists
+[ -e /work/.ssh/authorized_keys ] || cp /root/.ssh/authorized_keys /work/.ssh/
+
 # Permissions on user directories and docker.sock
 chown -R work:work /usr/local /work
 chown -R work: /var/run/docker.sock
