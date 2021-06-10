@@ -64,6 +64,7 @@ RUN set -ex; \
 
 # Copy the config and set data volume
 COPY --chown=work:work ./etc /usr/local/etc
+VOLUME /usr/local/env
 VOLUME /usr/local/share
 VOLUME /usr/local/cache
 VOLUME /work
