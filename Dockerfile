@@ -44,7 +44,7 @@ RUN addgroup work docker
 
 # tools
 RUN apk update && apk add \
-    iputils ncurses \
+    iputils ncurses esh \
     zsh tmux fzf nnn neovim neovim-doc neovim-lang fzf-neovim \
     highlight fd ack ripgrep the_silver_searcher
 
