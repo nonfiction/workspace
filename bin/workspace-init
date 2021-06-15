@@ -3,30 +3,6 @@
 # Run updates
 /usr/local/bin/update
 
-# # Save env variables to /usr/local/env
-# for key in DO_AUTH_TOKEN      \
-#            WEBHOOK            \
-#            DROPLET_IMAGE      \
-#            FS_TYPE            \
-#            REGION             \
-#            CODE_PASSWORD      \
-#            SUDO_PASSWORD      \
-#            BASICAUTH_PASSWORD \
-#            BASICAUTH_USER     \
-#            DB_HOST            \
-#            DB_PASSWORD        \
-#            DB_PORT            \
-#            DB_USER            \
-#            GITHUB_TOKEN       \
-#            GITHUB_USER        \
-#            GIT_USER_EMAIL     \
-#            GIT_USER_NAME      \
-#            ROOT_PASSWORD      \
-#            ROOT_PRIVATE_KEY   ; do 
-#   val="${(P)key}"
-#   [ -z "$val" ] || echo "$val" > /usr/local/env/$key
-# done
-
 # ssh on port 2222
 rc-status
 /etc/init.d/sshd start

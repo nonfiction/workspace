@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Save env variable to /usr/local/env
+# set_env DO_AUTH_TOKEN
+
+# Exit if no arguments passed
+[ -z "$1" ] && return 1
+
+local base="/usr/local/env"
+local file="${base}/${1}"
+local val="${!1}"
+
+# If this is null, load from file
+[ -z "$val" ] && return 1
+
+# Write file
+mkdir -p $base
+echo "$val" > "$file"

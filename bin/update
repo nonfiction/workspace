@@ -5,8 +5,6 @@ etc="/usr/local/etc"      # XDG_CONFIG_HOME
 share="/usr/local/share"  # XDG_DATA_HOME
 cache="/usr/local/cache"  # XDG_CACHE_HOME
 
-bin="/root/platform/bin"  # platform bin directory
-
 # Shell helper functions
 source $etc/zsh/helpers.sh
 
@@ -17,35 +15,35 @@ has /work/.config || ln -s $etc /work/.config
 has /work/.cache || ln -s $cache /work/.cache
 
 # Update password for user
-SUDO_PASSWORD=$($bin/env SUDO_PASSWORD "secret")
+SUDO_PASSWORD="$(get-env SUDO_PASSWORD secret)"
 defined "$SUDO_PASSWORD" && echo "work:${SUDO_PASSWORD}" | chpasswd
 
 # Git & Github
-GIT_NAME="$($bin/env GIT_NAME "nonfiction")" \
-GIT_EMAIL=$($bin/env GIT_EMAIL "web@nonfiction.ca") \
+GIT_NAME="$(get-env GIT_NAME nonfiction)" \
+GIT_EMAIL="$(get-env GIT_EMAIL web@nonfiction.ca)" \
 esh $etc/git/config.esh > $etc/git/config
 
-GITHUB_USER=$($bin/env GITHUB_USER "nonfiction-studios") \
-GITHUB_TOKEN=$($bin/env GITHUB_TOKEN) \
+GITHUB_USER="$(get-env GITHUB_USER nonfiction-studios)" \
+GITHUB_TOKEN="$(get-env GITHUB_TOKEN)" \
 esh $etc/git/credentials.esh > $etc/git/credentials
 
 # Settings for mysql client
 ln -sf $etc/mysql/.my.cnf /work/.my.cnf
 
-DB_USER=$($bin/env DB_USER "root") \
-DB_PASSWORD=$($bin/env DB_PASSWORD "secret") \
-DB_HOST=$($bin/env DB_HOST "127.0.0.1") \
-DB_PORT=$($bin/env DB_PORT "3306") \
+DB_USER="$(get-env DB_USER root)" \
+DB_PASSWORD="$(get-env DB_PASSWORD secret)" \
+DB_HOST="$(get-env DB_HOST 127.0.0.1)" \
+DB_PORT="$(get-env DB_PORT 3306)" \
 esh $etc/mysql/.my.cnf.esh > $etc/mysql/.my.cnf
 
 # Password for code-server
-CODE_PASSWORD=$($bin/env CODE_PASSWORD "secret") \
+CODE_PASSWORD="$(get-env CODE_PASSWORD secret)" \
 esh $etc/code-server/config.yaml.esh > $etc/code-server/config.yaml 
 
 # platform / swarm command
-git_clone_pull https://github.com/nonfiction/platform.git $share/platform
+git-clone-pull https://github.com/nonfiction/platform.git $share/platform
 ln -sf $share/platform/swarm/swarm /usr/local/bin/swarm
 
 # workspace (this repo)
-git_clone_pull https://github.com/nonfiction/workspace.git $share/workspace
+git-clone-pull https://github.com/nonfiction/workspace.git $share/workspace
 has $share/workspace/share/bin/update && $share/workspace/share/bin/update

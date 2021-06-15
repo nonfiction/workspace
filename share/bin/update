@@ -12,19 +12,19 @@ echo "Running updates in workspace/share"
 
 # oh-my-zsh
 mkdir -p $share/zsh
-git_clone_pull https://github.com/robbyrussell/oh-my-zsh.git $share/zsh/oh-my-zsh
+git-clone-pull https://github.com/robbyrussell/oh-my-zsh.git $share/zsh/oh-my-zsh
 
 # fzf
-git_clone_pull https://github.com/junegunn/fzf.git $share/fzf
+git-clone-pull https://github.com/junegunn/fzf.git $share/fzf
 
 # tmux plugin manager
 mkdir -p $share/tmux/plugins
-git_clone_pull https://github.com/tmux-plugins/tpm.git $share/tmux/plugins/tpm
+git-clone-pull https://github.com/tmux-plugins/tpm.git $share/tmux/plugins/tpm
 has $share/tmux/plugins/tpm/bin/install_plugins && $share/tmux/plugins/tpm/bin/install_plugins
 
 # vim-plug
 mkdir -p $share/nvim/site/{autoload,plugged}
-curl -fL https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > $share/nvim/site/autoload/plug.vim
+curl -fL https://github.com/junegunn/vim-plug/raw/master/plug.vim > $share/nvim/site/autoload/plug.vim
 has $share/nvim/site/autoload/custom.vim || cp $etc/nvim/custom.vim $share/nvim/site/autoload/custom.vim
 nvim +PlugInstall +qall >> /dev/null
 
