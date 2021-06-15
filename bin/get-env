@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# env DO_AUTH_TOKEN my-secret-token
+# get-env DO_AUTH_TOKEN my-secret-token
 # > attempts to load DO_AUTH_TOKEN from .env and environment
 # > falls back on named file in CWD or /usr/local/env
 # > falls back on my-secret-token as default value

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# context
+# > list all docker contexts
+if [ -z "$1" ]; then
+  docker context ls
+
+# context abc
+# > switches to the docker context named "abc"
+elif [ -z "$2" ]; then
+  docker context use $1
+  docker context ls
+
+# context abc abc.example.com
+# > adds new docker context named "abc" pointing to root@abc.example.com
+else
+  docker context create $1 --default-stack-orchestrator=swarm --docker "host=ssh://root@${2}"
+  docker context ls
+
+fi
