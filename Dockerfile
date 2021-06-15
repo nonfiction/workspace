@@ -67,6 +67,8 @@ COPY --chown=work:work ./etc /usr/local/etc
 VOLUME /usr/local/env
 VOLUME /usr/local/share
 VOLUME /usr/local/cache
+VOLUME /root
+VOLUME /data
 VOLUME /work
 WORKDIR /work
 
