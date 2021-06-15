@@ -5,6 +5,8 @@ etc="/usr/local/etc"      # XDG_CONFIG_HOME
 share="/usr/local/share"  # XDG_DATA_HOME
 cache="/usr/local/cache"  # XDG_CACHE_HOME
 
+bin="/root/platform/bin"  # platform bin directory
+
 # Shell helper functions
 source $etc/zsh/helpers.sh
 
@@ -15,40 +17,30 @@ has /work/.config || ln -s $etc /work/.config
 has /work/.cache || ln -s $cache /work/.cache
 
 # Update password for user
-SUDO_PASSWORD=$(env_file_default SUDO_PASSWORD /run/secrets/sudo_password "secret")
+SUDO_PASSWORD=$($bin/env SUDO_PASSWORD "secret")
 defined "$SUDO_PASSWORD" && echo "work:${SUDO_PASSWORD}" | chpasswd
 
 # Git & Github
-GIT_NAME=$(env_file_default GIT_NAME /run/secrets/git_name "nonfiction")
-defined "$GIT_NAME" && sed -i "s/__GIT_NAME__/${GIT_NAME}/" $etc/git/config
+GIT_NAME="$($bin/env GIT_NAME "nonfiction")" \
+GIT_EMAIL=$($bin/env GIT_EMAIL "web@nonfiction.ca") \
+esh $etc/git/config.esh > $etc/git/config
 
-GIT_EMAIL=$(env_file_default GIT_EMAIL /run/secrets/git_email "web@nonfiction.ca")
-defined "$GIT_EMAIL" && sed -i "s/__GIT_EMAIL__/${GIT_EMAIL}/" $etc/git/config
-
-GITHUB_USER=$(env_file_default GITHUB_USER /run/secrets/github_user "nonfiction-studios")
-defined "$GITHUB_USER" && sed -i "s/__GITHUB_USER__/${GITHUB_USER}/" $etc/git/credentials
-
-GITHUB_TOKEN=$(env_file_default GITHUB_TOKEN /run/secrets/github_token)
-defined "$GITHUB_TOKEN" && sed -i "s/__GITHUB_TOKEN__/${GITHUB_TOKEN}/" $etc/git/credentials
+GITHUB_USER=$($bin/env GITHUB_USER "nonfiction-studios") \
+GITHUB_TOKEN=$($bin/env GITHUB_TOKEN) \
+esh $etc/git/credentials.esh > $etc/git/credentials
 
 # Settings for mysql client
 ln -sf $etc/mysql/.my.cnf /work/.my.cnf
 
-DB_USER=$(env_file_default DB_USER /run/secrets/db_user "root")
-defined "$DB_USER" && sed -i "s/__DB_USER__/${DB_USER}/" $etc/mysql/.my.cnf
-
-DB_PASSWORD=$(env_file_default DB_PASSWORD /run/secrets/db_password "secret")
-defined "$DB_PASSWORD" && sed -i "s/__DB_PASSWORD__/${DB_PASSWORD}/" $etc/mysql/.my.cnf
-
-DB_HOST=$(env_file_default DB_HOST /run/secrets/db_host "127.0.0.1")
-defined "$DB_HOST" && sed -i "s/__DB_HOST__/${DB_HOST}/" $etc/mysql/.my.cnf
-
-DB_PORT=$(env_file_default DB_PORT /run/secrets/db_port "3306")
-defined "$DB_PORT" && sed -i "s/__DB_PORT__/${DB_PORT}/" $etc/mysql/.my.cnf
+DB_USER=$($bin/env DB_USER "root") \
+DB_PASSWORD=$($bin/env DB_PASSWORD "secret") \
+DB_HOST=$($bin/env DB_HOST "127.0.0.1") \
+DB_PORT=$($bin/env DB_PORT "3306") \
+esh $etc/mysql/.my.cnf.esh > $etc/mysql/.my.cnf
 
 # Password for code-server
-CODE_PASSWORD=$(env_file_default CODE_PASSWORD /run/secrets/code_server "secret")
-defined "$CODE_PASSWORD" && sed -i "s/__CODE_PASSWORD__/${CODE_PASSWORD}/" $etc/code-server/config.yaml
+CODE_PASSWORD=$($bin/env CODE_PASSWORD "secret") \
+esh $etc/code-server/config.yaml.esh > $etc/code-server/config.yaml 
 
 # platform / swarm command
 git_clone_pull https://github.com/nonfiction/platform.git $share/platform

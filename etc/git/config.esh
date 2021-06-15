@@ -5,8 +5,8 @@
 [credential]
   helper = store
 [user]
-  name = __GIT_NAME__
-  email = __GIT_EMAIL__
+  name = <%= $GIT_NAME %>
+  email = <%= $GIT_EMAIL %>
 [color]
   ui = auto
 [core]
