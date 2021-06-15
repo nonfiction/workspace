@@ -40,6 +40,11 @@ esh $etc/mysql/.my.cnf.esh > $etc/mysql/.my.cnf
 CODE_PASSWORD="$(get-env CODE_PASSWORD secret)" \
 esh $etc/code-server/config.yaml.esh > $etc/code-server/config.yaml 
 
+# Save copy of SWARMFILE that created this node's swarm
+mkdir -p $share/swarms
+SWARMFILE_CONTENTS="$(get-env SWARMFILE_CONTENTS)"
+defined $SWARMFILE_CONTENTS && echo $SWARMFILE_CONTENTS | base64 -d > $share/swarms/$(get-env SWARM)
+
 # platform / swarm command
 git-clone-pull https://github.com/nonfiction/platform.git $share/platform
 ln -sf $share/platform/swarm/swarm /usr/local/bin/swarm
