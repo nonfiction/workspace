@@ -18,6 +18,13 @@ has /work/.cache || ln -s $cache /work/.cache
 SUDO_PASSWORD="$(get-env SUDO_PASSWORD secret)"
 defined "$SUDO_PASSWORD" && echo "work:${SUDO_PASSWORD}" | chpasswd
 
+# Private images are pushed/pulled from here
+DO_AUTH_TOKEN="$(get-env DO_AUTH_TOKEN)"
+DOCKER_REGISTRY="$(get-env DOCKER_REGISTRY registry.digitalocean.com/nonfiction)"
+if defined $DO_AUTH_TOKEN && defined $DOCKER_REGISTRY; then
+  docker login -u $DO_AUTH_TOKEN -p $DO_AUTH_TOKEN $DOCKER_REGISTRY
+fi
+
 # Git & Github
 GIT_NAME="$(get-env GIT_NAME nonfiction)" \
 GIT_EMAIL="$(get-env GIT_EMAIL web@nonfiction.ca)" \
