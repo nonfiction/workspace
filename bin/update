@@ -30,10 +30,10 @@ esh $etc/git/credentials.esh > $etc/git/credentials
 # Settings for mysql client
 ln -sf $etc/mysql/.my.cnf /work/.my.cnf
 
-DB_USER="$(get-env DB_USER root)" \
-DB_PASSWORD="$(get-env DB_PASSWORD secret)" \
 DB_HOST="$(get-env DB_HOST 127.0.0.1)" \
 DB_PORT="$(get-env DB_PORT 3306)" \
+DB_ROOT_USER="$(get-env DB_ROOT_USER root)" \
+DB_ROOT_PASSWORD="$(get-env DB_ROOT_PASSWORD secret)" \
 esh $etc/mysql/.my.cnf.esh > $etc/mysql/.my.cnf
 
 # Password for code-server

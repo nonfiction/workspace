@@ -1,5 +1,5 @@
 [client]
-user=<%= $DB_USER %>
-password=<%= $DB_PASSWORD %>
 host=<%= $DB_HOST %>
 port=<%= $DB_PORT %>
+user=<%= $DB_ROOT_USER %>
+password=<%= $DB_ROOT_PASSWORD %>
