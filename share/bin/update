@@ -53,8 +53,8 @@ fi
 
 # Git & Github
 echo_next "Updating git config"
-GIT_NAME="$(get-env GIT_NAME nonfiction)" \
-GIT_EMAIL="$(get-env GIT_EMAIL web@nonfiction.ca)" \
+GIT_USER_NAME="$(get-env GIT_USER_NAME nonfiction)" \
+GIT_USER_EMAIL="$(get-env GIT_USER_EMAIL web@nonfiction.ca)" \
 echo_run "esh $etc/git/config.esh > $etc/git/config"
 
 echo_next "Updating git credentials"
