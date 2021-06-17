@@ -5,7 +5,7 @@ export ZSH=/usr/local/share/zsh/oh-my-zsh
 export ZSH_SHARE=/usr/local/share/workspace/share/zsh
 
 # Shell Helpers 
-source /usr/local/etc/zsh/helpers.sh
+source /usr/local/config/zsh/helpers.sh
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="muse"

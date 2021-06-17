@@ -1,0 +1,11 @@
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US:en
+export LC_ALL=en_US.UTF-8
+export XDG_CONFIG_HOME=/usr/local/config
+export XDG_CACHE_HOME=/usr/local/cache
+export XDG_DATA_HOME=/usr/local/share
+export ZDOTDIR=/usr/local/config/zsh
+export HISTFILE=/usr/local/share/zsh/history
+export NPM_CONFIG_USERCONFIG=/usr/local/config/npm/npmrc
+export DOCKER_CONFIG=/usr/local/share/docker
+export MACHINE_STORAGE_PATH=/usr/local/share/docker-machine

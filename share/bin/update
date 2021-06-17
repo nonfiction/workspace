@@ -1,12 +1,12 @@
 #!/usr/bin/env zsh
 
 # https://wiki.archlinux.org/title/XDG_Base_Directory
-etc="/usr/local/etc"      # XDG_CONFIG_HOME
-share="/usr/local/share"  # XDG_DATA_HOME
-cache="/usr/local/cache"  # XDG_CACHE_HOME
+config="/usr/local/config" # XDG_CONFIG_HOME
+share="/usr/local/share"   # XDG_DATA_HOME
+cache="/usr/local/cache"   # XDG_CACHE_HOME
 
 # Shell helper functions
-source $etc/zsh/helpers.sh
+source $config/zsh/helpers.sh
 
 echo_main() {
   defined $1 || return
@@ -28,12 +28,18 @@ echo_run() {
   eval "$1"
 }
 
+# Append line to end of file if it doesn't exist
+append() {
+  echo "\"$1\" >> $2"
+  grep -q "^$1" $2 || echo "$1" >> $2
+}
+
 echo_main "Running updates on workspace"
 
 # symlink configs to home directory
 mkdir -p /work/.local
 has /work/.local/share || ln -s $share /work/.local/share
-has /work/.config || ln -s $etc /work/.config
+has /work/.config || ln -s $config /work/.config
 has /work/.cache || ln -s $cache /work/.cache
 
 # Update password for user
@@ -55,12 +61,12 @@ fi
 echo_next "Updating git config"
 GIT_USER_NAME="$(get-env GIT_USER_NAME nonfiction)" \
 GIT_USER_EMAIL="$(get-env GIT_USER_EMAIL web@nonfiction.ca)" \
-echo_run "esh $etc/git/config.esh > $etc/git/config"
+echo_run "esh $config/git/config.esh > $config/git/config"
 
 echo_next "Updating git credentials"
 GITHUB_USER="$(get-env GITHUB_USER nonfiction-studios)" \
 GITHUB_TOKEN="$(get-env GITHUB_TOKEN)" \
-echo_run "esh $etc/git/credentials.esh > $etc/git/credentials"
+echo_run "esh $config/git/credentials.esh > $config/git/credentials"
 
 # Settings for mysql client
 echo_next "Updating mysql config"
@@ -68,18 +74,18 @@ DB_HOST="$(get-env DB_HOST 127.0.0.1)" \
 DB_PORT="$(get-env DB_PORT 3306)" \
 DB_ROOT_USER="$(get-env DB_ROOT_USER root)" \
 DB_ROOT_PASSWORD="$(get-env DB_ROOT_PASSWORD secret)" \
-echo_run "esh $etc/mysql/.my.cnf.esh > $etc/mysql/.my.cnf"
-ln -sf $etc/mysql/.my.cnf /work/.my.cnf
+echo_run "esh $config/mysql/.my.cnf.esh > $config/mysql/.my.cnf"
+ln -sf $config/mysql/.my.cnf /work/.my.cnf
 
 # Password for code-server
 echo_next "Updating coder-server config"
 CODE_PASSWORD="$(get-env CODE_PASSWORD secret)" \
-echo_run "esh $etc/code-server/config.yaml.esh > $etc/code-server/config.yaml"
+echo_run "esh $config/code-server/config.yaml.esh > $config/code-server/config.yaml"
 
 # Default settings for code-server
 if hasnt $share/code-server/User/settings.json; then
   echo_run "mkdir -p $share/code-server/User"
-  echo_run "cp $etc/code-server/settings.json $share/code-server/User/settings.json"
+  echo_run "cp $config/code-server/settings.json $share/code-server/User/settings.json"
 fi
 
 # Save copy of SWARMFILE that created this node's swarm
@@ -90,6 +96,15 @@ if defined $SWARMFILE_CONTENTS; then
   echo "$share/swarms/$(get-env SWARM)"
   echo $SWARMFILE_CONTENTS | base64 -d > $share/swarms/$(get-env SWARM)
 fi
+
+# if [ "$(whoami)" = "root" ]; then
+#   echo_next "Updating ssh_config"
+#   append "StrictHostKeyChecking no" /etc/ssh/ssh_config
+#   append "UserKnownHostsFile=/dev/null" /etc/ssh/ssh_config
+#   append "ControlMaster auto" /etc/ssh/ssh_config
+#   append "ControlPath ~/.ssh/control-%C" /etc/ssh/ssh_config
+#   append "ControlPersist yes" /etc/ssh/ssh_config
+# fi
 
 # oh-my-zsh
 echo_next "Updating oh-my-zsh"
@@ -122,7 +137,7 @@ fi
 echo_next "Updating nvim"
 mkdir -p $share/nvim/site/{autoload,plugged}
 curl -fL https://github.com/junegunn/vim-plug/raw/master/plug.vim > $share/nvim/site/autoload/plug.vim
-has $share/nvim/site/autoload/custom.vim || cp $etc/nvim/custom.vim $share/nvim/site/autoload/custom.vim
+has $share/nvim/site/autoload/custom.vim || cp $config/nvim/custom.vim $share/nvim/site/autoload/custom.vim
 echo "nvim +PlugInstall +qall >> /dev/null"
 nvim +PlugInstall +qall >> /dev/null
 
