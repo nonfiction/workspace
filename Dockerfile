@@ -50,7 +50,7 @@ RUN apk update && apk add \
 
 # Copy system config tweaks
 COPY ./etc/ssh_config /etc/ssh/ssh_config
-COPY ./etc/zsh /etc/zsh/zshenv
+COPY ./etc/zshenv /etc/zsh/zshenv
 
 # Copy the config and set data volume
 COPY --chown=work:work ./config /usr/local/config
