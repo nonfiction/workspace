@@ -76,6 +76,12 @@ echo_env() {
   echo "$(echo_color white "${key}=")$(echo_color green "\"${val}\"")"
 }
 
+echo_run() {
+  defined $1 || return
+  echo "$1"
+  $1
+}
+
 
 # Source gracefully
 source() {
