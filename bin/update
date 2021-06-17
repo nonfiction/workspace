@@ -1,61 +1,13 @@
 #!/usr/bin/env zsh
 
-# https://wiki.archlinux.org/title/XDG_Base_Directory
-etc="/usr/local/etc"      # XDG_CONFIG_HOME
-share="/usr/local/share"  # XDG_DATA_HOME
-cache="/usr/local/cache"  # XDG_CACHE_HOME
+# Install & update copy of nonfiction/platform
+git-clone-pull https://github.com/nonfiction/platform.git /usr/local/share/platform
 
-# Shell helper functions
-source $etc/zsh/helpers.sh
+# Symlink swarm command in /usr/local/bin directory
+ln -sf /usr/local/share/platform/swarm/swarm /usr/local/bin/swarm
 
-# symlink configs to home directory
-mkdir -p /work/.local
-has /work/.local/share || ln -s $share /work/.local/share
-has /work/.config || ln -s $etc /work/.config
-has /work/.cache || ln -s $cache /work/.cache
+# Install & update copy of nonfiction/workspace
+git-clone-pull https://github.com/nonfiction/workspace.git /usr/local/share/workspace
 
-# Update password for user
-SUDO_PASSWORD="$(get-env SUDO_PASSWORD secret)"
-defined "$SUDO_PASSWORD" && echo "work:${SUDO_PASSWORD}" | chpasswd
-
-# Private images are pushed/pulled from here
-DO_AUTH_TOKEN="$(get-env DO_AUTH_TOKEN)"
-DOCKER_REGISTRY="$(get-env DOCKER_REGISTRY registry.digitalocean.com/nonfiction)"
-if defined $DO_AUTH_TOKEN && defined $DOCKER_REGISTRY; then
-  docker login -u $DO_AUTH_TOKEN -p $DO_AUTH_TOKEN $DOCKER_REGISTRY
-fi
-
-# Git & Github
-GIT_NAME="$(get-env GIT_NAME nonfiction)" \
-GIT_EMAIL="$(get-env GIT_EMAIL web@nonfiction.ca)" \
-esh $etc/git/config.esh > $etc/git/config
-
-GITHUB_USER="$(get-env GITHUB_USER nonfiction-studios)" \
-GITHUB_TOKEN="$(get-env GITHUB_TOKEN)" \
-esh $etc/git/credentials.esh > $etc/git/credentials
-
-# Settings for mysql client
-ln -sf $etc/mysql/.my.cnf /work/.my.cnf
-
-DB_HOST="$(get-env DB_HOST 127.0.0.1)" \
-DB_PORT="$(get-env DB_PORT 3306)" \
-DB_ROOT_USER="$(get-env DB_ROOT_USER root)" \
-DB_ROOT_PASSWORD="$(get-env DB_ROOT_PASSWORD secret)" \
-esh $etc/mysql/.my.cnf.esh > $etc/mysql/.my.cnf
-
-# Password for code-server
-CODE_PASSWORD="$(get-env CODE_PASSWORD secret)" \
-esh $etc/code-server/config.yaml.esh > $etc/code-server/config.yaml 
-
-# Save copy of SWARMFILE that created this node's swarm
-mkdir -p $share/swarms
-SWARMFILE_CONTENTS="$(get-env SWARMFILE_CONTENTS)"
-defined $SWARMFILE_CONTENTS && echo $SWARMFILE_CONTENTS | base64 -d > $share/swarms/$(get-env SWARM)
-
-# platform / swarm command
-git-clone-pull https://github.com/nonfiction/platform.git $share/platform
-ln -sf $share/platform/swarm/swarm /usr/local/bin/swarm
-
-# workspace (this repo)
-git-clone-pull https://github.com/nonfiction/workspace.git $share/workspace
-has $share/workspace/share/bin/update && $share/workspace/share/bin/update
+# Continue by running update command in workspace's share/bin directory
+[ -e /usr/local/share/workspace/share/bin/update ] && /usr/local/share/workspace/share/bin/update

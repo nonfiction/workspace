@@ -8,33 +8,94 @@ cache="/usr/local/cache"  # XDG_CACHE_HOME
 # Shell helper functions
 source $etc/zsh/helpers.sh
 
-echo "Running updates in workspace/share"
+echo_main "Running updates on workspace"
+
+# symlink configs to home directory
+mkdir -p /work/.local
+has /work/.local/share || ln -s $share /work/.local/share
+has /work/.config || ln -s $etc /work/.config
+has /work/.cache || ln -s $cache /work/.cache
+
+# Update password for user
+SUDO_PASSWORD="$(get-env SUDO_PASSWORD secret)"
+if [ "$(whoami)" = "root" ]; then
+  echo_next "Updating sudo password"
+  defined "$SUDO_PASSWORD" && echo "work:${SUDO_PASSWORD}" | chpasswd
+fi
+
+# Private images are pushed/pulled from here
+DO_AUTH_TOKEN="$(get-env DO_AUTH_TOKEN)"
+DOCKER_REGISTRY="$(get-env DOCKER_REGISTRY registry.digitalocean.com/nonfiction)"
+if defined $DO_AUTH_TOKEN && defined $DOCKER_REGISTRY; then
+  echo_next "Logging into Docker Registry"
+  docker login -u $DO_AUTH_TOKEN -p $DO_AUTH_TOKEN $DOCKER_REGISTRY
+fi
+
+# Git & Github
+echo_next "Updating git config"
+GIT_NAME="$(get-env GIT_NAME nonfiction)" \
+GIT_EMAIL="$(get-env GIT_EMAIL web@nonfiction.ca)" \
+esh $etc/git/config.esh > $etc/git/config
+
+echo_next "Updating git credentials"
+GITHUB_USER="$(get-env GITHUB_USER nonfiction-studios)" \
+GITHUB_TOKEN="$(get-env GITHUB_TOKEN)" \
+esh $etc/git/credentials.esh > $etc/git/credentials
+
+# Settings for mysql client
+echo_next "Updating mysql config"
+DB_HOST="$(get-env DB_HOST 127.0.0.1)" \
+DB_PORT="$(get-env DB_PORT 3306)" \
+DB_ROOT_USER="$(get-env DB_ROOT_USER root)" \
+DB_ROOT_PASSWORD="$(get-env DB_ROOT_PASSWORD secret)" \
+esh $etc/mysql/.my.cnf.esh > $etc/mysql/.my.cnf
+ln -sf $etc/mysql/.my.cnf /work/.my.cnf
+
+# Password for code-server
+echo_next "Updating coder-server config"
+CODE_PASSWORD="$(get-env CODE_PASSWORD secret)" \
+esh $etc/code-server/config.yaml.esh > $etc/code-server/config.yaml 
+# Default settings for code-server
+mkdir -p $share/code-server/User
+has $share/code-server/User/settings.json || cp $etc/code-server/settings.json $share/code-server/User/settings.json
+
+# Save copy of SWARMFILE that created this node's swarm
+mkdir -p $share/swarms
+SWARMFILE_CONTENTS="$(get-env SWARMFILE_CONTENTS)"
+if defined $SWARMFILE_CONTENTS; then
+  echo_next "Updating swarmfile"
+  echo $SWARMFILE_CONTENTS | base64 -d > $share/swarms/$(get-env SWARM)
+fi
 
 # oh-my-zsh
+echo_next "Updating oh-my-zsh"
 mkdir -p $share/zsh
 git-clone-pull https://github.com/robbyrussell/oh-my-zsh.git $share/zsh/oh-my-zsh
 
 # fzf
+echo_next "Updating fzf"
 git-clone-pull https://github.com/junegunn/fzf.git $share/fzf
 
+# PHP Composer
+echo_next "Updating composer"
+mkdir -p $share/composer 
+has /work/.composer || ln -s $share/composer /work/.composer
+
+# npm
+echo_next "Updating npm"
+mkdir -p $share/npm $cache/npm
+
 # tmux plugin manager
+echo_next "Updating tmux"
 mkdir -p $share/tmux/plugins
 git-clone-pull https://github.com/tmux-plugins/tpm.git $share/tmux/plugins/tpm
 has $share/tmux/plugins/tpm/bin/install_plugins && $share/tmux/plugins/tpm/bin/install_plugins
 
 # vim-plug
+echo_next "Updating nvim"
 mkdir -p $share/nvim/site/{autoload,plugged}
 curl -fL https://github.com/junegunn/vim-plug/raw/master/plug.vim > $share/nvim/site/autoload/plug.vim
 has $share/nvim/site/autoload/custom.vim || cp $etc/nvim/custom.vim $share/nvim/site/autoload/custom.vim
 nvim +PlugInstall +qall >> /dev/null
 
-# PHP Composer
-mkdir -p $share/composer 
-has /work/.composer || ln -s $share/composer /work/.composer
-
-# npm
-mkdir -p $share/npm $cache/npm
-
-# Default settings for code-server
-mkdir -p $share/code-server/User
-has $share/code-server/User/settings.json || cp $etc/code-server/settings.json $share/code-server/User/settings.json
+echo_next "...done!"
