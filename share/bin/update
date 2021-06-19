@@ -54,7 +54,7 @@ DO_AUTH_TOKEN="$(get-env DO_AUTH_TOKEN)"
 DOCKER_REGISTRY="$(get-env DOCKER_REGISTRY registry.digitalocean.com/nonfiction)"
 if defined $DO_AUTH_TOKEN && defined $DOCKER_REGISTRY; then
   echo_next "Logging into Docker Registry"
-  docker login -u $DO_AUTH_TOKEN -p $DO_AUTH_TOKEN $DOCKER_REGISTRY
+  docker --context default login -u $DO_AUTH_TOKEN -p $DO_AUTH_TOKEN $DOCKER_REGISTRY
 fi
 
 # Docker buildx
@@ -84,8 +84,10 @@ DB_HOST="$(get-env DB_HOST 127.0.0.1)" \
 DB_PORT="$(get-env DB_PORT 3306)" \
 DB_ROOT_USER="$(get-env DB_ROOT_USER root)" \
 DB_ROOT_PASSWORD="$(get-env DB_ROOT_PASSWORD secret)" \
-echo_run "esh $config/mysql/.my.cnf.esh > $config/mysql/.my.cnf"
-ln -sf $config/mysql/.my.cnf /work/.my.cnf
+echo_run "esh $config/mysql/my.cnf.esh > $config/mysql/my.cnf"
+if [ "$(whoami)" = "root" ]; then
+  ln -sf $config/mysql/my.cnf /etc/mysql/my.cnf
+fi
 
 # Password for code-server
 echo_next "Updating coder-server config"
@@ -107,15 +109,6 @@ if defined $SWARMFILE_CONTENTS; then
   echo $SWARMFILE_CONTENTS | base64 -d > $share/swarms/$(get-env SWARM)
 fi
 
-# if [ "$(whoami)" = "root" ]; then
-#   echo_next "Updating ssh_config"
-#   append "StrictHostKeyChecking no" /etc/ssh/ssh_config
-#   append "UserKnownHostsFile=/dev/null" /etc/ssh/ssh_config
-#   append "ControlMaster auto" /etc/ssh/ssh_config
-#   append "ControlPath ~/.ssh/control-%C" /etc/ssh/ssh_config
-#   append "ControlPersist yes" /etc/ssh/ssh_config
-# fi
-
 # oh-my-zsh
 echo_next "Updating oh-my-zsh"
 mkdir -p $share/zsh
@@ -126,13 +119,17 @@ echo_next "Updating fzf"
 git-clone-pull https://github.com/junegunn/fzf.git $share/fzf
 
 # PHP Composer
-echo_next "Updating composer"
-mkdir -p $share/composer 
-has /work/.composer || ln -s $share/composer /work/.composer
+if hasnt /work/.composer; then
+  echo_next "Updating composer"
+  mkdir -p $share/composer 
+  ln -s $share/composer /work/.composer
+fi
 
 # npm
-echo_next "Updating npm"
-mkdir -p $share/npm $cache/npm
+if hasnt $share/npm; then
+  echo_next "Updating npm"
+  mkdir -p $share/npm $cache/npm
+fi
 
 # tmux plugin manager
 echo_next "Updating tmux"
@@ -150,5 +147,12 @@ curl -fL https://github.com/junegunn/vim-plug/raw/master/plug.vim > $share/nvim/
 has $share/nvim/site/autoload/custom.vim || cp $config/nvim/custom.vim $share/nvim/site/autoload/custom.vim
 echo "nvim +PlugInstall +qall >> /dev/null"
 nvim +PlugInstall +qall >> /dev/null
+
+
+# Permissions on user directories and docker.sock
+if [ "$(whoami)" = "root" ]; then
+  chown -R work:work /usr/local /work
+  chown -R work: /var/run/docker.sock
+fi
 
 echo_next "...done!"
