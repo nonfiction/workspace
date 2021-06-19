@@ -59,12 +59,9 @@ fi
 
 # Docker buildx
 if hasnt $share/docker/cli-plugins/docker-buildx; then
-  echo_next "Installing docker buildx"
+  echo_next "Linking docker buildx"
   mkdir -p $share/docker/cli-plugins
-  v=0.5.1
-  curl -fL https://github.com/docker/buildx/releases/download/v${v}/buildx-v${v}.linux-amd64 \
-    > $share/docker/cli-plugins/docker-buildx
-  chmod +x $share/docker/cli-plugins/docker-buildx
+  ln -sf /usr/bin/docker-buildx $share/docker/cli-plugins/docker-buildx
 fi
 
 # Git & Github

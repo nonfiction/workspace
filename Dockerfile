@@ -10,6 +10,7 @@ RUN apk update && apk add sudo git
 RUN adduser -h /work -s /bin/zsh work | echo password
 ENV HOME /work
 RUN echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
+RUN touch /var/lib/sudo/lectured/work
 RUN addgroup work wheel
 
 # npm & webpack
@@ -38,14 +39,16 @@ RUN apk update && apk add \
     php7-mysqli php7-exif php7-opcache php7-zip php7-xml \
     php7-curl php7-mbstring php7-xmlwriter php7-simplexml
 
-# docker & docker-compose
-RUN apk update && apk add docker docker-compose
+# docker
+RUN apk update && apk add docker
 RUN addgroup work docker
+RUN curl -fL https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64 \
+    > /usr/bin/docker-buildx && chmod +x /usr/bin/docker-buildx
 
 # tools
 RUN apk update && apk add \
     esh iputils ncurses asciidoctor \
-    zsh tmux fzf nnn neovim neovim-doc neovim-lang fzf-neovim \
+    zsh tmux fzf fish nnn neovim neovim-doc neovim-lang fzf-neovim \
     highlight fd ack ripgrep the_silver_searcher
 
 # Copy system config tweaks
