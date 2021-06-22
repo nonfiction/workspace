@@ -44,6 +44,9 @@ export VISUAL=nvim
 alias vim=nvim
 alias vi=nvim
 
+# Tmux
+export TMUX_PLUGIN_MANAGER_PATH "/usr/local/share/tmux/plugins/"
+
 # Customize FZF
 source $ZSH_SHARE/fzf.sh
 

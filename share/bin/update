@@ -106,6 +106,9 @@ if defined $SWARMFILE_CONTENTS; then
   echo $SWARMFILE_CONTENTS | base64 -d > $share/swarms/$(get-env SWARM)
 fi
 
+# Check swarm and install doctl if missing
+swarm ls
+
 # oh-my-zsh
 echo_next "Updating oh-my-zsh"
 mkdir -p $share/zsh
