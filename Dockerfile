@@ -47,7 +47,7 @@ RUN curl -fL https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0
 
 # tools
 RUN apk update && apk add \
-    esh iputils ncurses asciidoctor apache2-utils \
+    esh iputils ncurses asciidoctor apache2-utils htop \
     zsh tmux fzf fish nnn neovim neovim-doc neovim-lang fzf-neovim \
     highlight fd ack ripgrep the_silver_searcher
 
