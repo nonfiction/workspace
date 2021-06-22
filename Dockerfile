@@ -1,10 +1,10 @@
 FROM alpine:latest
 
 # code-server
-RUN apk update && apk add yarn npm alpine-sdk libstdc++ libc6-compat python2 python3 bash
-RUN npm config set python python3
-RUN npm install -g --unsafe-perm code-server
-# RUN npm install -g --unsafe-perm code-server@3.9.3
+RUN apk update && apk add npm alpine-sdk libstdc++ libc6-compat python2 python3 bash
+# RUN npm config set python python3
+# RUN npm install -g --unsafe-perm code-server
+RUN npm install -g --unsafe-perm code-server@3.9.3
 # RUN yarn global add code-server
 
 # workspace user
