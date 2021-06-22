@@ -15,4 +15,5 @@ chown -R work:work /usr/local /work
 chown -R work: /var/run/docker.sock
 
 # Run code-server
-su -c "cd /work && /usr/local/share/npm/bin/code-server" - work
+# su -c "cd /work && /usr/local/share/npm/bin/code-server" - work
+su -c "cd /work && code-server" - work
