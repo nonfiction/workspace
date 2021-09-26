@@ -2,6 +2,7 @@
 
 # Install & update copy of nonfiction/platform
 git-clone-pull https://github.com/nonfiction/platform.git /usr/local/share/platform
+cd /usr/local/share/platform && git checkout --track origin/v2
 
 # Symlink nf command in /usr/local/bin directory
 ln -sf /usr/local/share/platform/cli/nf /usr/local/bin/nf
