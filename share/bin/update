@@ -125,6 +125,11 @@ if hasnt /work/.composer; then
   ln -s $share/composer /work/.composer
 fi
 
+# WP-CLI
+if hasnt wp; then
+  composer global require wp-cli/wp-cli
+fi
+
 # npm
 if hasnt $share/npm; then
   echo_next "Updating npm"

@@ -36,7 +36,7 @@ plugins=(git gitignore sudo rsync)
 source $ZSH/oh-my-zsh.sh
 
 # Path
-export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH="$HOME/bin:/usr/local/share/composer/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Editor
 export EDITOR=nvim
