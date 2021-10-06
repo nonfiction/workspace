@@ -122,6 +122,7 @@ set showmode                           " show what mode (Insert/Normal/Visual) i
 set timeoutlen=500
 set number                             " show line numbers
 set wildmode=list:longest,list:full
+set redrawtime=10000
 
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap j gj
