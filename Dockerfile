@@ -32,6 +32,7 @@ RUN mkdir -p /etc/ssh
 RUN mkdir -p /run/openrc && touch /run/openrc/softlevel && rc-update add sshd
 RUN echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 RUN echo "Port 2222" >> /etc/ssh/sshd_config
+RUN sed -i 's/^AllowTcpForwarding no/AllowTcpForwarding yes/' /etc/ssh/sshd_config
 RUN ssh-keygen -A
 
 # php & composer
@@ -50,7 +51,8 @@ RUN curl -fL https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0
 RUN apk update && apk add \
     esh iputils ncurses asciidoctor apache2-utils htop \
     zsh tmux fzf fish nnn neovim neovim-doc neovim-lang fzf-neovim \
-    highlight fd ack ripgrep the_silver_searcher
+    highlight fd ack ripgrep the_silver_searcher \
+    github-cli jq
 
 # Copy system config tweaks
 COPY ./etc/ssh_config /etc/ssh/ssh_config
