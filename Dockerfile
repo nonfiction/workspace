@@ -1,15 +1,12 @@
-FROM alpine:3.14
+FROM alpine:3.16
 
-# code-server
-RUN apk update && apk add npm alpine-sdk libstdc++ libc6-compat python2 python3 bash
-# RUN npm config set python python3
-RUN npm install -g --unsafe-perm code-server@3.9.3
-# RUN yarn global add code-server
+# install these
+RUN apk update && apk add npm alpine-sdk libstdc++ libc6-compat python3 bash
 
 # workspace user
 RUN apk update && apk add sudo git
 RUN adduser -h /work -s /bin/zsh work | echo password
-ENV HOME /work
+ENV HOME=/work
 RUN echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
 RUN touch /var/lib/sudo/lectured/work
 RUN addgroup work wheel
@@ -37,22 +34,20 @@ RUN ssh-keygen -A
 
 # php & composer
 RUN apk update && apk add \
-    composer php7-common php7-ctype php7-tokenizer php7-gd \
-    php7-mysqli php7-exif php7-opcache php7-zip php7-xml php7-dom \
-    php7-curl php7-mbstring php7-xmlwriter php7-simplexml
+    composer php8-common php8-ctype php8-tokenizer php8-gd \
+    php8-mysqli php8-exif php8-opcache php8-zip php8-xml php8-dom \
+    php8-curl php8-mbstring php8-xmlwriter php8-simplexml
 
 # docker
-RUN apk update && apk add docker
-RUN addgroup work docker
-RUN curl -fL https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64 \
-    > /usr/bin/docker-buildx && chmod +x /usr/bin/docker-buildx
+RUN apk update && apk add docker docker-cli docker-cli-buildx
+RUN addgroup work docker 
 
 # tools
 RUN apk update && apk add \
     esh iputils ncurses asciidoctor apache2-utils htop \
     zsh tmux fzf fish nnn neovim neovim-doc neovim-lang fzf-neovim \
     highlight fd ack ripgrep the_silver_searcher \
-    github-cli jq
+    github-cli jq shadow
 
 # Copy system config tweaks
 COPY ./etc/ssh_config /etc/ssh/ssh_config
